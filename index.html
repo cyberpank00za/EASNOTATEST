@@ -3,16 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Player</title>
+    <title>Auto Fullscreen Video</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        video {
+            width: 100%;
+            max-width: 800px;
+        }
+    </style>
 </head>
 <body>
 
-    <h2>Playing EAS.mp4</h2>
-
-    <video width="640" height="360" controls>
+    <video id="myVideo" controls autoplay muted>
         <source src="EAS.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+
+    <script>
+        const video = document.getElementById('myVideo');
+
+        // Function to request fullscreen
+        function openFullscreen() {
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) { /* Safari */
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) { /* IE11 */
+                video.msRequestFullscreen();
+            }
+        }
+
+        // Trigger fullscreen on the first click anywhere on the page
+        document.addEventListener('click', () => {
+            openFullscreen();
+            video.muted = false; // Unmute sound upon user interaction
+        }, { once: true });
+    </script>
 
 </body>
 </html>
